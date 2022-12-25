@@ -4,18 +4,13 @@
 using namespace std;
  
 struct Node {
-  /**
-   * Data Members
-   */
-	// links to subsequent trie nodes
+  // links to subsequent trie nodes
 	Node* links[26] = { NULL };
 
   // flag to show that current node is last node of a word
 	bool flag = false;
- 
-  /**
-   * Member functions
-   */
+
+  
 	// checks if the corresponding trie node exists or not
 	bool containsKey(char ch) {
 		return (links[ch - 'a'] != NULL);
