@@ -7,32 +7,31 @@ struct Node {
   // links to subsequent trie nodes
   Node* links[26] = { NULL };
 
-  // flag to show that current node is last node of a word
+  // flag to infer if current node is last node of a word
   bool flag = false;
 
-
-  // checks if the corresponding trie node exists or not
-  bool containsKey(char ch) {
+  // checks if the trie node corresponding to given character exists
+  bool isCharacterNodePresent(char ch) {
     return (links[ch - 'a'] != NULL);
   }
  
-  // creating reference trie
-  void putKey(char ch, Node *node) {
+  // to add new trie node corresponding to given character
+  void addCharacterNode(char ch, Node *node) {
     links[ch - 'a'] = node;
   }
  
-  // to get the next node for traversal
-  Node* get(char ch) {
+  // to get the trie node corresponding to given character
+  Node* getNextNode(char ch) {
     return links[ch - 'a'];
   }
  
-  // to set flag to true at the end of the word
-  void setEnd() {
+  // to set flag to true to mark end of the word
+  void setAsEndNode() {
     flag = true;
   }
  
-  // to check if the word ends at the current node or not
-  bool isEnd() {
+  // to check if a word ends at the current node or not
+  bool isEndNode() {
     return flag;
   }
 };
@@ -52,40 +51,40 @@ class Trie {
       Node *node = root;
       for (int i = 0; i < word.size(); i++) {
         // current key/char doesn't have the corresponding reference trie node
-        if (node->containsKey(word[i]) == false) {
-          node->putKey(word[i], new Node());
+        if (node->isCharacterNodePresent(word[i]) == false) {
+          node->addCharacterNode(word[i], new Node());
         }
   
         // move to next char reference trie node
-        node = node->get(word[i]);
+        node = node->getNextNode(word[i]);
       }
   
       // once the word ends, mark the current reference trie node as last
-      node->setEnd();
+      node->setAsEndNode();
     }
   
     bool search(string word) {
       // always start with the root node to start checking if the characters of the given word exists
       Node *node = root;
       for (int i = 0; i < word.size(); i++) {
-        if (node->containsKey(word[i]) == false) {
+        if (node->isCharacterNodePresent(word[i]) == false) {
           return false;
         }
   
         // move to next char reference trie node
-        node = node->get(word[i]);
+        node = node->getNextNode(word[i]);
       }
   
-      return node->isEnd();
+      return node->isEndNode();
     }
   
     bool startsWith(string prefix) {
       Node* node = root;
       for (int i = 0; i < prefix.size(); i++) {
-        if (!node->containsKey(prefix[i])) {
+        if (!node->isCharacterNodePresent(prefix[i])) {
           return false;
         }
-        node = node->get(prefix[i]);
+        node = node->getNextNode(prefix[i]);
       }
   
       return true;
@@ -94,27 +93,29 @@ class Trie {
  
 int main() {
   int n = 5;
-  vector<int> type = { 1, 1, 2, 3, 2 };
-  vector<string> value = { "hello", "help", "help", "hel", "hel" };
+  vector<int> operationType = { 1, 1, 2, 3, 2 };
+  vector<string> operationValue = { "hello", "help", "help", "hel", "hel" };
 
+  // initialize trie
   Trie trie;
+
   for (int i = 0; i < n; i++) {
     // Insert operation
-    if (type[i] == 1) {
-      cout << "Insert word: " << value[i] << endl;
-      trie.insert(value[i]);
+    if (operationType[i] == 1) {
+      cout << "Insert word: " << operationValue[i] << endl;
+      trie.insert(operationValue[i]);
     // Search operation
-    } else if (type[i] == 2) {
-      cout << "Search word: " << value[i] << " -> ";
-      if (trie.search(value[i])) {
+    } else if (operationType[i] == 2) {
+      cout << "Search word: " << operationValue[i] << " -> ";
+      if (trie.search(operationValue[i])) {
         cout << "found" << "\n";
       } else {
         cout << "false" << "\n";
       }
     // StartsWith Operation
     } else {
-      if (trie.startsWith(value[i])) {
-        cout << "Check if a word starts with: " << value[i] << " -> ";
+      if (trie.startsWith(operationValue[i])) {
+        cout << "Check if a word starts with: " << operationValue[i] << " -> ";
         cout << "found" << "\n";
       } else {
         cout << "not found" << "\n";
