@@ -21,11 +21,11 @@ int findPeak (int arr[], int n) {
                 low = mid+1;
             }
         // We handle cases of index as 0 or size-1 separately as for the given
-		// problem, for index as 0 or size-1, the comparison happens only with 
-		// single adjacent element unlike other indexes where comparison happens
-		// with 2 adjacent elements. It also enables us to check for m-1 & m+1
-		// freely while being on 0 & size-1 index
-		// if index is 0 or size - 1
+        // problem, for index as 0 or size-1, the comparison happens only with 
+        // single adjacent element unlike other indexes where comparison happens
+        // with 2 adjacent elements. It also enables us to check for m-1 & m+1
+        // freely while being on 0 & size-1 index
+        // if index is 0 or size - 1
         } else {
             // if first element of the array
             if (mid == 0) {
@@ -33,7 +33,7 @@ int findPeak (int arr[], int n) {
                 if (arr[mid] > arr[mid+1])
                     return mid;
                 // if arr[mid] is not greater, then element next to it must
-				// have been greater as thats why came to this side
+                // have been greater as thats why came to this side
                 else
                     return mid+1;
             // if last element of the array
@@ -42,7 +42,7 @@ int findPeak (int arr[], int n) {
                 if (arr[mid] > arr[mid-1])
                     return mid;
                 // if arr[mid] is not greater, then element next to it must
-				// have been greater as thats why came to this side
+                // have been greater as thats why came to this side
                 else
                     return mid-1;
             }
