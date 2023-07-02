@@ -7,7 +7,13 @@ using namespace std;
  * 1e9 doesn't need additional header to be included.
 */
 int minPathSumMemoizedUtil (vector<vector<int>> &mat, int rows, int cols, int i, int j, vector<vector<int>> &learn) {
-    // out of boundary base case
+    // IMPORTANT: understand why do we need to return a large number. Imagine while 
+	// going down we cross the bottom boundary, now if we return anything like 0 for
+	// such a case, next we try out is the right path from the boundary cell. Then 
+	// we take the min of these 2 paths. We need to ensure that we discard this path
+	// which had crossed the boundary so that it doesnt end up becoming the smallest
+	// amongst this & path after right turn. Thus, to discard this path, we return 
+	// a large number.
     if (i >= rows || j >= cols)
         return 1e9;
     
@@ -40,7 +46,13 @@ int minPathSumMemoized (vector<vector<int>> &mat) {
  * 1e9 doesn't need additional header to be included.
 */
 int minPathSumRecursiveUtil (vector<vector<int>> &mat, int rows, int cols, int i, int j) {
-    // Out of boundary base case
+    // IMPORTANT: understand why do we need to return a large number. Imagine while 
+	// going down we cross the bottom boundary, now if we return anything like 0 for
+	// such a case, next we try out is the right path from the boundary cell. Then 
+	// we take the min of these 2 paths. We need to ensure that we discard this path
+	// which had crossed the boundary so that it doesnt end up becoming the smallest
+	// amongst this & path after right turn. Thus, to discard this path, we return 
+	// a large number.
     if (i >= rows || j >= cols)
         return 1e9;
     
