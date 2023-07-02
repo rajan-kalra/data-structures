@@ -7,13 +7,16 @@ using namespace std;
  * 1e9 doesn't need additional header to be included.
 */
 int minPathSumVariableStartPointMemoizedUtil (vector<vector<int>> &mat, int rows, int cols, int i, int j, vector<vector<int>> &learn) {
-    // this condition is added based on movements we make i.e
-    // since any movement can only cross column boudary 
+    // Out of boundary base case. In this problem, we can go out of boundary
+    // only for columns. This is bcoz for rows we return as soon as we touch row
+    // which is last row & for cols we need to handle the case for indexes [0][0]
+    // & [0][cols-1], for these 2 indexes when we do leftDiagonal & rightDiagonal
+    // respectively, we end up stepping out of the boundary
     if (j < 0 || j >= cols)
         return 1e9;
     
-    // this condition is added since we need to stop the
-    // recursion as soon as we reach last row
+    // Destination reached base case. For this problem, destination can be any
+    // index in first row
     if (i == rows-1)
         return mat[i][j];
 
@@ -50,13 +53,16 @@ int minPathSumVariableStartPointMemoized (vector<vector<int>> &mat) {
  * 1e9 doesn't need additional header to be included.
 */
 int minPathSumVariableStartPointRecursiveUtil (vector<vector<int>> &mat, int rows, int cols, int i, int j) {
-    // this condition is added based on movements we make i.e
-    // since any movement can only cross column boudary 
+    // Out of boundary base case. In this problem, we can go out of boundary
+    // only for columns. This is bcoz for rows we return as soon as we touch row
+    // which is last row & for cols we need to handle the case for indexes [0][0]
+    // & [0][cols-1], for these 2 indexes when we do leftDiagonal & rightDiagonal
+    // respectively, we end up stepping out of the boundary
     if (j < 0 || j >= cols)
         return 1e9;
     
-    // this condition is added since we need to stop the
-    // recursion as soon as we reach last row
+    // Destination reached base case. For this problem, destination can be any
+    // index in first row
     if (i == rows-1)
         return mat[i][j];
 
