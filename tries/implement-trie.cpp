@@ -93,6 +93,9 @@ class Trie {
  
 int main() {
   int n = 5;
+  // 1. Insert Operation
+  // 2. Search Operation
+  // 3. Starts With Operation
   vector<int> operationType = { 1, 1, 2, 3, 2 };
   vector<string> operationValue = { "hello", "help", "help", "hel", "hel" };
 
