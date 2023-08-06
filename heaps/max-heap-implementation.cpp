@@ -3,42 +3,57 @@
 using namespace std;
 
 class Heap {
-    public:
+    private:
         int arr[100];
         int size;
+        int index;
 
-        // we init the 0th index value as -1 since we need to start
-        // from index 1
+    public:
+
+        /**
+         * we init the 0th index value as -1 since we follow 1
+         * based indexing
+         */
         Heap () {
             arr[0] = -1;
             size = 0;
+            index = 0;
         }
 
-        // O(log n) operation since for each insert, we keep comparing 
-        // the child with its parent & keep moving upwards in the heap
+        /**
+         * O(log n) operation since for each insert, we keep
+         * comparing the child with its parent & keep moving
+         * upwards in the heap.
+         * Insert is a 3 step process:
+         * 1. Find the current index where element is to be
+         * inserted & insert the element.
+         * 2. Find the parent index of current index & compare
+         * the current element at parent index element. If parent
+         * index element is smaller, swap the current index &
+         * parent index elements. Set current index equal to parent
+         * index.
+         * 3. Repeat above steps until current index is greater than 1.
+         */
         void insertElem (int elem) {
-            // update the size including upcoming element
-            size = size + 1;
-
-            // create index to insert new element
-            int index = size;
-
-            // insert element at the last index of the heap
+            int index = index + 1;
             arr[index] = elem;
+            size++;
 
-            // We wont go inside the loop for index as 1 & we dont really 
-            // need to go inside the loop for index 1 as movement of nodes
-            // is required only when there are more than 1 node 
+            /**
+             * We wont go inside loop for index as 1 as movement of
+             * nodes is required only when there are more than 1 node 
+             */
             while (index > 1) {
-                // find the parent index of current index
                 int parent = index / 2;
 
-                // if element at parent index is less than the
-                // newly inserted element, swap both the element
-                // to maintain max heap property.
-                // Once we swap the child & parent, we move furhter
-                // up make parent to maintain the max-heap property
-                // Thus we set index as parent index
+                /**
+                 * If element at parent index is less than the newly
+                 * inserted element, swap both the element to maintain
+                 * max heap property.
+                 * Once we swap the child & parent, we move further up
+                 * to maintain the max-heap property by setting index
+                 * as parent index
+                 */
                 if (arr[parent] < arr[index]) {
                     swap(arr[parent], arr[index]);
                     index = parent;
@@ -47,15 +62,17 @@ class Heap {
                 }
             }
         }
-
-        // O(log n) operation
-        // Delete happens always with the root node
-        // Delete element happens in 3 steps:
-        // 1. Put the last node value at the first index (or we sometimes
-        // say swap first index & last index values). To note, once complete 
-        // this step could have violated the max-heap property.
-        // 2. Remove the last node, as now its duplicate of first element
-        // 3. Propagate the root node to its correct position
+        
+        /**
+         * O(log n) operation since after each deletion, we bring
+         * last element to the top & then keep pushing the root
+         * downwards to its correct position.
+         * Delete element happens in 3 steps:
+         * 1. Put the last node value at the first index. To note, once
+         * complete this step could have violated the max-heap property
+         * 2. Remove the last node, as now its duplicate of first element
+         * 3. Propagate the root node to its correct position
+         */
         void deleteElem () {
             if (size == 0) {
                 cout << "Heap is empty!" << endl;
@@ -63,7 +80,7 @@ class Heap {
             }
 
             // Step 1: put last element into first index
-            arr[1] = arr[size];
+            arr[1] = arr[index];
 
             // Step 2
             size--;
@@ -71,33 +88,41 @@ class Heap {
             // Step 3
             int i = 1;
             while (i < size) {
-                int leftIndex = 2*i;
-                int rightIndex = 2*i + 1;
+                int leftChildIndex = 2*i;
+                int rightChildIndex = 2*i + 1;
 
-                if (leftIndex < size && arr[leftIndex] > arr[i]) {
-                    swap (arr[i], arr[leftIndex]);
-                    i = leftIndex;
-                } else if (rightIndex < size && arr[rightIndex] > arr[i]) {
-                    swap (arr[i], arr[rightIndex]);
-                    i = rightIndex;
+                if (leftChildIndex < size && arr[leftChildIndex] > arr[i]) {
+                    swap (arr[i], arr[leftChildIndex]);
+                    i = leftChildIndex;
+                } else if (rightChildIndex < size && arr[rightChildIndex] > arr[i]) {
+                    swap (arr[i], arr[rightChildIndex]);
+                    i = rightChildIndex;
                 } else {
                     return;
                 }
             }
         }
 
-        // Heapify is a process of converting the subtree under the given index a valid heap.
-        // We are generally given an index i, we run heapify on index i which takes case of all 
-        // the indexes starting from i to size.
-        // We solve this problem using the fact that no of leaves in a complete binary tree will
-        // always be (n/2)+1 to nth index.
-        // We also know that a leaf node is always a valid heap.
-        // This function ensures that given an index, we make subtree of this index a valid heap.
-        // For this we iterate through the last element of the input array to the first element &
-        // establish the fact that each node represents a valid heap, including its child nodes.
-        // Using the above fact about leaf nodes exist from (n/2)+1 to nth index, we need not to
-        // consider these nodes to be heapified & thus only consider nodes 1 to n/2 nodes to be
-        // heapified. Thus we run the loop from i = n/2 to 1.
+        /**
+         * Heapify is a process of converting the subtree under the given
+         * index a valid heap.
+         * We are given an index i, we run heapify on index i which takes
+         * care of all the indexes starting from i to size i.e ensures all
+         * indexes from i to size form a valid heap.
+         * We build the algorithm of heapify using the fact that no of
+         * leaves in a complete binary tree will always be present from
+         * (n/2)+1 to nth index.
+         * We also know that a leaf node is always a valid heap.
+         * This function ensures that given an index, we make subtree of
+         * this index a valid heap. For this we iterate from the last
+         * element of the input array to the first element & establish
+         * the fact that each node represents a valid heap, including its
+         * child nodes.
+         * Using the above fact about leaf nodes exist from (n/2)+1 to nth
+         * index, we need not to consider these nodes to be heapified & thus
+         * only consider nodes 1 to n/2 nodes to be heapified.
+         * Thus we run the loop from i = n/2 to 1.
+         */
         void heapify (vector<int>& arr, int n, int i) {
             // given index i, we need to make i as a valid heap
             int largest = i;
