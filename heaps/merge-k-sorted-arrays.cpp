@@ -38,13 +38,20 @@ vector<int> mergeKArrays (vector<vector<int>> input) {
     }
 
     while (min_heap.size() > 0) {
+        // get min from the heap & push it to the output vector
         Node *node = min_heap.top();
         output.push_back(node->data);
         min_heap.pop();
 
+        // find the row,col indexes of min node recevied from heap
         int i = node->i;
         int j = node->j;
 
+        /**
+         * check if next node in the same array where min node was
+         * extracted exists. If exists, add next node from the same
+         * array
+         */
         if (j+1 < input[i].size()) {
             Node *next = new Node (input[i][j+1], i, j+1);
             min_heap.push(next);
