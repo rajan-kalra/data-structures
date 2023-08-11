@@ -37,19 +37,20 @@ class Solution {
   }
  
 public:
-  vector<int> DFSOfGraph(int V, vector<int> adjList[]) {
-    vector<int> dfs; 
-    vector<int> visited(V+1, 0);
-    // this loop ensures that if there are disconnected components,
-    // we cover them too if one of the component is completely traversed
-    for (int i = 1; i <= V; i++) {
-      if (visited[i] == 0) {
-        DFS(i, visited, adjList, dfs);
-      }
-    }
+    vector<int> DFSOfGraph(int V, vector<int> adjList[]) {
+        vector<int> dfs; 
+        vector<int> visited(V+1, 0);
+        
+        // this loop ensures that if there are disconnected components,
+        // we cover them too if one of the component is completely traversed
+        for (int node = 1; node <= V; node++) {
+            if (visited[node] == 0) {
+                DFS(node, visited, adjList, dfs);
+            }
+        }
 
-    return dfs; 
-  }
+        return dfs; 
+    }
 };
  
 void addEdge(vector<int> adj[], int u, int v) {
