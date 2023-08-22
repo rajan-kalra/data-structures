@@ -4,26 +4,29 @@ using namespace std;
 
 class Heap {
     private:
-        int arr[100];
+        int *arr;
         int size;
         int index;
+        int capacity;
 
     public:
-
         /**
-         * we init the 0th index value as -1 since we follow 1
-         * based indexing
+         * we init the 0th index value as -1
+         * since we follow 1 based indexing
          */
-        Heap () {
+        Heap (int capacity) {
+            arr = new int(capacity);
             arr[0] = -1;
             size = 0;
             index = 0;
+            this->capacity = capacity;
         }
 
         /**
-         * O(log n) operation since for each insert, we keep
-         * comparing the child with its parent & keep moving
-         * upwards in the heap.
+         * O(log n) operation
+         * For each insert, we keep comparing the child with
+         * its parent & keep moving upwards in the heap.
+         * 
          * Insert is a 3 step process:
          * 1. Find the current index where element is to be
          * inserted & insert the element.
@@ -35,7 +38,12 @@ class Heap {
          * 3. Repeat above steps until current index is greater than 1.
          */
         void insertElem (int elem) {
-            int index = index + 1;
+            if (size == capacity) {
+                cout << "Heap full, can't insert new element!";
+                return;
+            }
+
+            index++;
             arr[index] = elem;
             size++;
 
@@ -43,8 +51,9 @@ class Heap {
              * We wont go inside loop for index as 1 as movement of
              * nodes is required only when there are more than 1 node 
              */
-            while (index > 1) {
-                int parent = index / 2;
+            int tempIndex = index;
+            while (tempIndex > 1) {
+                int parent = tempIndex / 2;
 
                 /**
                  * If element at parent index is less than the newly
@@ -54,9 +63,9 @@ class Heap {
                  * to maintain the max-heap property by setting index
                  * as parent index
                  */
-                if (arr[parent] < arr[index]) {
-                    swap(arr[parent], arr[index]);
-                    index = parent;
+                if (arr[parent] < arr[tempIndex]) {
+                    swap(arr[parent], arr[tempIndex]);
+                    tempIndex = parent;
                 } else {
                     return;
                 }
@@ -165,7 +174,7 @@ class Heap {
 };
 
 int main() {
-    Heap h;
+    Heap h(100);
 
     h.insertElem (50);
     h.insertElem (55);
