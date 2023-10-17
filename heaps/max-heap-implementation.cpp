@@ -43,6 +43,9 @@ class Heap {
                 return;
             }
 
+            // Here we intend to insert the element at the end of the
+            // heap, thus just insert the element at the incremented
+            // index & later push it to correct position
             index++;
             arr[index] = elem;
             size++;
