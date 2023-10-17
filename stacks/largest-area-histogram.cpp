@@ -13,15 +13,17 @@ int getMaxAreaHistogram(vector<int>& histogram) {
 
     // boundary case to be handled
     stack_rb.push(n - 1);
-    rightBoundary[n - 1] = n;
+    rightBoundary[n - 1] = n-1;
 
     for (int i = n - 2; i >= 0; i--) {
-        while (stack_rb.empty() == false && histogram[i] < histogram[stack_rb.top()]) {
+        // Since we look for smaller element on right, we keep popping the elements until
+        // we have elements in stack either greater or equal to the current element
+        while (stack_rb.empty() == false && histogram[i] <= histogram[stack_rb.top()]) {
             stack_rb.pop();
         }
 
         if (stack_rb.empty()) {
-            rightBoundary[i] = n;
+            rightBoundary[i] = n-1;
         } else {
             rightBoundary[i] = stack_rb.top();
         }
@@ -35,15 +37,17 @@ int getMaxAreaHistogram(vector<int>& histogram) {
 
     // boundary case to be handled
     stack_lb.push(0);
-    leftBoundary[0] = -1;
+    leftBoundary[0] = 0;
     
     for (int i = 1; i < histogram.size(); i++) {
-        while (stack_lb.empty() == false && histogram[i] < histogram[stack_lb.top()]) {
+        // Since we look for smaller element on left, we keep popping the elements until
+        // we have elements in stack either greater or equal to the current element
+        while (stack_lb.empty() == false && histogram[i] <= histogram[stack_lb.top()]) {
             stack_lb.pop();
         }
 
         if (stack_lb.empty()) {
-            leftBoundary[i] = -1;
+            leftBoundary[i] = 0;
         } else {
             leftBoundary[i] = stack_lb.top();
         }
@@ -52,7 +56,7 @@ int getMaxAreaHistogram(vector<int>& histogram) {
     }
     
     for (int i = 0; i < n; i++) {
-        int width = (rightBoundary[i] - leftBoundary[i] - 1);
+        int width = (rightBoundary[i] - leftBoundary[i] + 1);
         int area = histogram[i] * width;
 
         // here we find area for each index & calculate the maxArea
