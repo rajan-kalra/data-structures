@@ -62,7 +62,7 @@ int maxRobberyMemoized(int* houseMoneyArray, int i, int n, vector<int> &dp) {
     int notPick = 0 + maxRobberyMemoized(houseMoneyArray, i+1, n, dp);
 
     // return max of picked and not picked
-    return dp[n] = max(pick, notPick);
+    return dp[i] = max(pick, notPick);
 }
  
 int maxRobberyTabulation(int* houseMoneyArray, int n, vector<int> &dp) {
