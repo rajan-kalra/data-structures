@@ -21,7 +21,7 @@ int search(int arr[], int n, int target, int k) {
     // We use max here to make sure that i
     // moves at-least one step ahead. This
     // can handle the edge case when k is 0
-    // & all elements are same
+    // i.e all elements are same
     diff = max(1, diff);
 
     // move the start index by atleast diff
