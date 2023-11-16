@@ -7,54 +7,64 @@ int getMaxAreaHistogram(vector<int>& histogram) {
     int n = histogram.size();
     int maxArea = 0;
 
-    // populating right boundary array having indexes of next smaller element for each index
     stack<int> stack_rb;
+
+    /**
+     * rightBoundary array shall contain the indexes
+     * of next smaller element on the right for each index
+     */
     vector<int> rightBoundary(n);
 
-    // boundary case to be handled
-    stack_rb.push(n - 1);
+    // boundary case to be handled i.e for rightmost index, smaller element index is n-1
     rightBoundary[n - 1] = n-1;
+    stack_rb.push(n - 1);
 
     for (int i = n - 2; i >= 0; i--) {
-        // Since we look for smaller element on right, we keep popping the elements until
-        // we have elements in stack either greater or equal to the current element
-        while (stack_rb.empty() == false && histogram[i] <= histogram[stack_rb.top()]) {
-            stack_rb.pop();
-        }
-
-        if (stack_rb.empty()) {
-            rightBoundary[i] = n-1;
-        } else {
+        if (histogram[stack_rb.top()] < histogram[i]) {
             rightBoundary[i] = stack_rb.top();
+        } else {
+            while (stack_rb.empty() == false && histogram[stack_rb.top()] >= histogram[i]) {
+                stack_rb.pop();
+            }
+            if (stack_rb.empty() == true) {
+                rightBoundary[i] = n-1;
+            } else {    
+                rightBoundary[i] = stack_rb.top();
+            }
         }
-
+        
         stack_rb.push(i);
     }
 
-    // populating left boundary array having indexes of next smaller element for each index
     stack<int> stack_lb;
+    /**
+     * leftBoundary array shall contain the indexes
+     * of next smaller element on the left for each index
+     */
     vector<int> leftBoundary(n);
 
-    // boundary case to be handled
-    stack_lb.push(0);
+    // boundary case to be handled i.e for leftmost index, smaller element index is 0
     leftBoundary[0] = 0;
+    stack_lb.push(0);
     
     for (int i = 1; i < histogram.size(); i++) {
-        // Since we look for smaller element on left, we keep popping the elements until
-        // we have elements in stack either greater or equal to the current element
-        while (stack_lb.empty() == false && histogram[i] <= histogram[stack_lb.top()]) {
-            stack_lb.pop();
-        }
-
-        if (stack_lb.empty()) {
-            leftBoundary[i] = 0;
-        } else {
+        if (histogram[stack_lb.top()] < histogram[i]) {
             leftBoundary[i] = stack_lb.top();
+        } else {
+            while (stack_lb.empty() == false && histogram[stack_lb.top()] >= histogram[i]) {
+                stack_lb.pop();
+            }
+
+            if (stack_lb.empty() == true) {
+                leftBoundary[i] = n-1;
+            } else {    
+                leftBoundary[i] = stack_lb.top();
+            }
         }
 
         stack_lb.push(i);
     }
-    
+
     for (int i = 0; i < n; i++) {
         int width = (rightBoundary[i] - leftBoundary[i] + 1);
         int area = histogram[i] * width;
