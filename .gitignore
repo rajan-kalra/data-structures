@@ -1,4 +1,4 @@
-*.user
+code/.user
 bin
 obj
 packages
@@ -13,3 +13,6 @@ packages
 
 # Ignore files with extension `.class` & `.sm`
 *.dSYM
+
+*.DS_Store
+*.vscode/
