@@ -13,28 +13,37 @@ void printNGE(int arr[], int n) {
     cout << arr[n-1] << " -> -1" << endl;
     s.push(arr[n-1]);
 
-    for (int i = n-2; i >= 0; i--) {
+    for (int i = n - 2; i >= 0; i--) {
+        int curr = arr[i];
         /**
-         * keep popping the elements until stack is not empty
-         * & top of stack is less than the current element
+         * top of stack is either greater than current element
+         * or smaller than current element
+         * If top of stack is greater than current element, just
+         * print this as the greater element
          */
-        while (s.empty() == false && s.top() < arr[i]) {
-            s.pop();
-        }
-
+        if (s.top() > curr) {
+            cout << curr << " -> " << s.top() << endl;
         /**
-         * either the stack has become empty which means no element
-         * was found which is greater than current element or we find
-         * the element greater than current element
+         * If top of stack is greater than or equal to current element
          */
-        if (s.empty()) {
-            cout << arr[i] << " -> -1" << endl;
         } else {
-            cout << arr[i] << " -> " << s.top() << endl;
-        }
+            /**
+             * keep popping the elements until stack is not empty
+             * & top of stack is less than or equal to the current
+             * element
+             */
+            while (s.empty() == false && s.top() <= curr) {
+                s.pop();
+            }
 
-        // push the current element to stack irrespective of case above
-        s.push(arr[i]);
+            if (s.empty() == true) {
+                cout << arr[i] << " -> -1" << endl;
+            } else {    
+                cout << curr << " -> " << s.top() << endl;
+            }
+        }
+        // insert the current element at the end always
+        s.push(curr);
     }
 }
 

@@ -2,3 +2,14 @@
 bin
 obj
 packages
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
+# Ignore files with extension `.class` & `.sm`
+*.dSYM
