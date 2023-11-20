@@ -84,9 +84,13 @@ int main() {
     head = createNode(9);
     head->next = createNode(9);
     head->next->next = createNode(9);
-    head->next->next->next = createNode(9);
-    cout << "List before operation: "; printList(head);
+    head->next->next->next = createNode(8);
+    cout << "List before operation: ";
+    printList(head);
+    
     head = add1ToListUsingReverse (head);
-    cout << "List after operation: "; printList(head);
+    
+    cout << "List after operation: ";
+    printList(head);
     return 0;
 }
