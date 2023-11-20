@@ -12,12 +12,12 @@ class Node {
         }
 };
  
-Node* CreateNode (int data) {
+Node* createNode (int data) {
     Node *node = new Node(data);
     return node;
 }
  
-void PrintList (Node *head) {
+void printList (Node *head) {
     if (head == NULL)
         return;
 
@@ -65,7 +65,7 @@ Node *Add1ToReveresedList (Node *head) {
     }
 
     if (carry > 0) {
-        temp->next = CreateNode(carry);
+        temp->next = createNode(carry);
     }
 
     return head;
@@ -81,12 +81,12 @@ Node *add1ToListUsingReverse (Node *head) {
 
 int main() {
     Node *head = NULL;
-    head = CreateNode(9);
-    head->next = CreateNode(9);
-    head->next->next = CreateNode(9);
-    head->next->next->next = CreateNode(9);
-    cout << "List before operation: "; PrintList(head);
+    head = createNode(9);
+    head->next = createNode(9);
+    head->next->next = createNode(9);
+    head->next->next->next = createNode(9);
+    cout << "List before operation: "; printList(head);
     head = add1ToListUsingReverse (head);
-    cout << "List after operation: "; PrintList(head);
+    cout << "List after operation: "; printList(head);
     return 0;
 }

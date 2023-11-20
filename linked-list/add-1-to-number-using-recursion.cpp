@@ -12,12 +12,12 @@ class Node {
         }
 };
  
-Node* CreateNode (int data) {
+Node* createNode (int data) {
     Node *node = new Node(data);
     return node;
 }
  
-void PrintList (Node *head) {
+void printList (Node *head) {
     if (head == NULL)
         return;
 
@@ -58,7 +58,7 @@ Node *add1ToListUsingRecursion (Node *head) {
     int carry = addWithCarry(head);
     
     if (carry > 0) {
-        Node *node = CreateNode(carry);
+        Node *node = createNode(carry);
         node->next = head;
         head = node;
     }
@@ -68,12 +68,12 @@ Node *add1ToListUsingRecursion (Node *head) {
 
 int main() {
     Node *head = NULL;
-    head = CreateNode(1);
-    head->next = CreateNode(9);
-    head->next->next = CreateNode(9);
-    head->next->next->next = CreateNode(9);
-    cout << "List before operation: "; PrintList(head);
+    head = createNode(1);
+    head->next = createNode(9);
+    head->next->next = createNode(9);
+    head->next->next->next = createNode(9);
+    cout << "List before operation: "; printList(head);
     head = add1ToListUsingRecursion (head);
-    cout << "List after operation: "; PrintList(head);
+    cout << "List after operation: "; printList(head);
     return 0;
 }

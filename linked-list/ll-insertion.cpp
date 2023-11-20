@@ -11,18 +11,18 @@ class Node {
         }
 };
  
-Node* CreateNode (int data) {
+Node* createNode (int data) {
 	Node *node = new Node(data);
 	return node;
 }
  
-Node* InsertAfter (Node *head, int after) {
+Node* insertAfter (Node *head, int after) {
 	if (head == NULL) {
 		cout << "Empty list!";
 		return NULL;
 	}
  
-	Node *node = CreateNode(100);
+	Node *node = createNode(100);
 	Node *curr = head;
  
 	// 'after' node is first node
@@ -42,11 +42,11 @@ Node* InsertAfter (Node *head, int after) {
  
 Node* InsertAtEnd (Node *head, int data) {
 	if (head == NULL) {
-		Node *node = CreateNode(0);
+		Node *node = createNode(0);
 		return node;
 	}
  
-	Node *node = CreateNode(0);
+	Node *node = createNode(0);
 	Node *curr = head;
 	while (curr->next)
 		curr = curr->next;
@@ -56,17 +56,17 @@ Node* InsertAtEnd (Node *head, int data) {
  
 Node* InsertAtStart (Node *head, int data) {
 	if (head == NULL) {
-		Node *node = CreateNode(0);
+		Node *node = createNode(0);
 		return node;
 	}
  
-	Node *node = CreateNode(0);
+	Node *node = createNode(0);
 	node->next = head;
 	head = node;
 	return head;
 }
  
-void PrintList (Node *head) {
+void printList (Node *head) {
 	if (head == NULL)
 		return;
  
@@ -79,15 +79,15 @@ void PrintList (Node *head) {
  
 int main() {
 	Node *head = NULL;
-	head = CreateNode(1);
-	head->next = CreateNode(2);
-	head->next->next = CreateNode(3);
-	head->next->next->next = CreateNode(4);
-	head->next->next->next->next = CreateNode(5);
-	PrintList(head);
+	head = createNode(1);
+	head->next = createNode(2);
+	head->next->next = createNode(3);
+	head->next->next->next = createNode(4);
+	head->next->next->next->next = createNode(5);
+	printList(head);
 	//head = InsertAtStart(head, 0);
 	//head = InsertAtEnd(head, 0);
-	head = InsertAfter(head, 6);
-	PrintList(head);
+	head = insertAfter(head, 6);
+	printList(head);
 	return 0;
 }

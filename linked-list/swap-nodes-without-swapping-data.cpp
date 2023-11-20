@@ -12,12 +12,12 @@ class Node {
         }
 };
  
-Node* CreateNode (int data) {
+Node* createNode (int data) {
     Node *node = new Node(data);
     return node;
 }
  
-void PrintList (Node *head) {
+void printList (Node *head) {
     if (head == NULL)
         return;
 
@@ -104,19 +104,19 @@ Node *swapNodes (Node *head, int n1, int n2) {
 
 int main() {
     Node *head = NULL;
-    head = CreateNode(1);
-    head->next = CreateNode(2);
-    head->next->next = CreateNode(3);
-    head->next->next->next = CreateNode(4);
-    head->next->next->next->next = CreateNode(5);
-    head->next->next->next->next->next = CreateNode(6);
-    cout << "List before operation: "; PrintList(head);
+    head = createNode(1);
+    head->next = createNode(2);
+    head->next->next = createNode(3);
+    head->next->next->next = createNode(4);
+    head->next->next->next->next = createNode(5);
+    head->next->next->next->next->next = createNode(6);
+    cout << "List before operation: "; printList(head);
     //head = swapNodes(head, 1, 5);
     //head = swapNodes(head, 3, 5);
     //head = swapNodes(head, 4, 5);
     //head = swapNodes(head, 5, 6);
     head = swapNodes(head, 5, 7);
-    cout << "List after operation: "; PrintList(head);
+    cout << "List after operation: "; printList(head);
 
     return 0;
 }

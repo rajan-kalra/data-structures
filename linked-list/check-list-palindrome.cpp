@@ -11,18 +11,18 @@ class Node {
         }
 };
  
-Node* CreateNode (int data) {
+Node* createNode (int data) {
     Node *node = new Node(data);
     return node;
 }
  
-Node* InsertAfter (Node *head, int after) {
+Node* insertAfter (Node *head, int after) {
     if (head == NULL) {
         cout << "Empty list!";
         return NULL;
     }
 
-    Node *node = CreateNode(100);
+    Node *node = createNode(100);
     Node *curr = head;
 
     // 'after' node is first node
@@ -40,7 +40,7 @@ Node* InsertAfter (Node *head, int after) {
     return head;
 }
 
-void PrintList (Node *head) {
+void printList (Node *head) {
     if (head == NULL)
         return;
 
@@ -52,18 +52,18 @@ void PrintList (Node *head) {
 }
 
 Node* reverseList (Node *head) {
-	Node *curr = head;
-	Node *prev = NULL;
-	Node *next;
+    Node *curr = head;
+    Node *prev = NULL;
+    Node *next;
 
-	while (curr) {
+    while (curr) {
         next = curr->next;
-		curr->next = prev;
-		prev = curr;
-		curr = next;
-	}
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
 
-	return prev;
+    return prev;
 }
 
 bool compareLists (Node *head1, Node *head2) {
@@ -75,7 +75,7 @@ bool compareLists (Node *head1, Node *head2) {
     if (head1 == NULL && head2 == NULL)
         return true;
     else
-    return false;
+        return false;
 }
 
 bool isListPalindrome (Node *head) {
@@ -94,23 +94,28 @@ bool isListPalindrome (Node *head) {
         fast = fast->next->next;
     }
 
+    // if fast is NULL, its a even length list
     if (fast == NULL) {
         prevSlow->next = NULL;
         secondHalf = slow;
+    // if fast->next is NULL, its an odd length list
     } else {
         secondHalf = slow->next;
         prevSlow->next = NULL;
+        // keeping middle node as standalone
         mid = slow;
     }
 
     Node *newSecondHalfHead = reverseList (secondHalf);
-
     bool result = compareLists (head, newSecondHalfHead);
     secondHalf = reverseList (newSecondHalfHead);
 
+    /* reconnect the list */
+    // mid if not null, it was an odd length list
     if (mid) {
         prevSlow->next = mid;
         mid->next = secondHalf;
+    // if  mid is NULL, it was an even length list
     } else {
         prevSlow->next = secondHalf;
     }
@@ -120,17 +125,17 @@ bool isListPalindrome (Node *head) {
  
 int main() {
     Node *head = NULL;
-    head = CreateNode(1);
-    head->next = CreateNode(2);
-    head->next->next = CreateNode(3);
-    head->next->next->next = CreateNode(3);
-    head->next->next->next->next = CreateNode(2);
-    head->next->next->next->next->next = CreateNode(1);
-    cout << "List before operations: "; PrintList(head);
+    head = createNode(1);
+    head->next = createNode(2);
+    head->next->next = createNode(3);
+    head->next->next->next = createNode(3);
+    head->next->next->next->next = createNode(2);
+    head->next->next->next->next->next = createNode(1);
+    cout << "List before operations: "; printList(head);
 
     isListPalindrome(head) ? cout << "Given list represents a palindrome!" << endl : cout << "Given list doesn't represent a palindrome!" << endl;
 
-    cout << "List before operations: "; PrintList(head);
+    cout << "List before operations: "; printList(head);
 
     return 0;
 }

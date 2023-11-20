@@ -12,12 +12,12 @@ class Node {
         }
 };
  
-Node* CreateNode (int data) {
+Node* createNode (int data) {
     Node *node = new Node(data);
     return node;
 }
  
-void PrintList (Node *head) {
+void printList (Node *head) {
     if (head == NULL)
         return;
 
@@ -78,11 +78,11 @@ int getLoopLength (Node *head) {
 
 int main() {
     Node *head = NULL;
-    head = CreateNode(1);
-    head->next = CreateNode(2);
-    head->next->next = CreateNode(3);
-    head->next->next->next = CreateNode(4);
-    head->next->next->next->next = CreateNode(5);
+    head = createNode(1);
+    head->next = createNode(2);
+    head->next->next = createNode(3);
+    head->next->next->next = createNode(4);
+    head->next->next->next->next = createNode(5);
 
     head->next->next->next->next->next = head->next->next;
 

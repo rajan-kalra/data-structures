@@ -12,12 +12,12 @@ class Node {
         }
 };
  
-Node* CreateNode (int data) {
+Node* createNode (int data) {
     Node *node = new Node(data);
     return node;
 }
  
-void PrintList (Node *head) {
+void printList (Node *head) {
     if (head == NULL)
         return;
 
@@ -72,17 +72,17 @@ Node *reverseInGroupsOfSizeK (Node *head, int k) {
 
 int main() {
     Node *head = NULL;
-    head = CreateNode(1);
-    head->next = CreateNode(2);
-    head->next->next = CreateNode(3);
-    head->next->next->next = CreateNode(4);
-    head->next->next->next->next = CreateNode(5);
-    head->next->next->next->next->next = CreateNode(6);
-    cout << "List before operation: "; PrintList(head);
+    head = createNode(1);
+    head->next = createNode(2);
+    head->next->next = createNode(3);
+    head->next->next->next = createNode(4);
+    head->next->next->next->next = createNode(5);
+    head->next->next->next->next->next = createNode(6);
+    cout << "List before operation: "; printList(head);
     //head = reverseInGroupsOfSizeK(head, 1);
     //head = reverseInGroupsOfSizeK(head, 2);
     //head = reverseInGroupsOfSizeK(head, 4);
     head = reverseInGroupsOfSizeK(head, 6);
-    cout << "List after operation: "; PrintList(head);
+    cout << "List after operation: "; printList(head);
     return 0;
 }
