@@ -15,30 +15,6 @@ Node* createNode (int data) {
     Node *node = new Node(data);
     return node;
 }
- 
-Node* insertAfter (Node *head, int after) {
-    if (head == NULL) {
-        cout << "Empty list!";
-        return NULL;
-    }
-
-    Node *node = createNode(100);
-    Node *curr = head;
-
-    // 'after' node is first node
-    while (curr && curr->data != after) {
-        curr = curr->next;
-    }
-
-    if (curr == NULL) {
-        cout << after << " not found" << endl;
-        return head;
-    }
-
-    node->next = curr->next;
-    curr->next = node;
-    return head;
-}
 
 void printList (Node *head) {
     if (head == NULL)
@@ -135,7 +111,7 @@ int main() {
 
     isListPalindrome(head) ? cout << "Given list represents a palindrome!" << endl : cout << "Given list doesn't represent a palindrome!" << endl;
 
-    cout << "List before operations: "; printList(head);
+    cout << "List after operations: "; printList(head);
 
     return 0;
 }
