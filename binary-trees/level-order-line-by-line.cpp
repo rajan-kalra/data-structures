@@ -15,7 +15,7 @@ class Node {
         }
 };
 
-Node* CreateNode (int k) {
+Node* createNode (int k) {
     Node *node = new Node(k);
     return node;
     }
@@ -63,13 +63,13 @@ void LevelOrderLineByLine (Node *root) {
 }
 
 int main() {
-    Node *root = CreateNode (1);
-    root->left = CreateNode (2);
-    root->right = CreateNode (3);
-    root->left->left = CreateNode (4);
-    root->left->right = CreateNode (5);
-    root->right->left = CreateNode (6);
-    root->right->right = CreateNode (7);
+    Node *root = createNode (1);
+    root->left = createNode (2);
+    root->right = createNode (3);
+    root->left->left = createNode (4);
+    root->left->right = createNode (5);
+    root->right->left = createNode (6);
+    root->right->right = createNode (7);
     cout << "Level order line by line: \n";
     LevelOrderLineByLine (root);
     return 0;
