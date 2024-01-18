@@ -37,6 +37,7 @@ int detectAndRemoveLoop(Node* head) {
 void removeLoop(Node* loop_node, Node* head) {
     Node* ptr1 = loop_node;
     Node* ptr2 = loop_node;
+    Node* prev_ptr2 = NULL;
 
     // STEP 2: Count the number of nodes in loop
     int k = 1;
@@ -55,6 +56,8 @@ void removeLoop(Node* loop_node, Node* head) {
     /* STEP 4: Move both the pointers at the same pace, they will meet at loop starting node */
     while (ptr2 != ptr1) {
         ptr1 = ptr1->next;
+        // maintaining the previous of ptr2 to mark its next as NULL later
+        prev_ptr2 = ptr2;
         ptr2 = ptr2->next;
     }
 
@@ -63,7 +66,7 @@ void removeLoop(Node* loop_node, Node* head) {
         ptr2 = ptr2->next;
 
     /* STEP 5: Set the next node of the loop ending node to fix the loop */
-    ptr2->next = NULL;
+    prev_ptr2->next = NULL;
 }
 
 void printList(struct Node* node) {
