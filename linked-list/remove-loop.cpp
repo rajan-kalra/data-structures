@@ -12,28 +12,6 @@ class Node {
         }
 };
 
-int detectAndRemoveLoop(Node* head) {
-    Node *slow_p = head;
-    Node *fast_p = head;
-
-    // STEP 1: Iterate and find if loop exists or not
-    while (fast_p && fast_p->next) {
-        slow_p = slow_p->next;
-        fast_p = fast_p->next->next;
-
-        /* If slow_p and fast_p meet at some point then there is a loop */
-        if (slow_p == fast_p) {
-            removeLoop(slow_p, head);
-
-            /* Return 1 to indicate that loop was found & removed */
-            return 1;
-        }
-    }
-
-    /* Return 0 to indicate that no loop was found */
-    return 0;
-}
-
 void removeLoop(Node* loop_node, Node* head) {
     Node* ptr1 = loop_node;
     Node* ptr2 = loop_node;
@@ -67,6 +45,28 @@ void removeLoop(Node* loop_node, Node* head) {
 
     /* STEP 5: Set the next node of the loop ending node to fix the loop */
     prev_ptr2->next = NULL;
+}
+
+int detectAndRemoveLoop(Node* head) {
+    Node *slow_p = head;
+    Node *fast_p = head;
+
+    // STEP 1: Iterate and find if loop exists or not
+    while (fast_p && fast_p->next) {
+        slow_p = slow_p->next;
+        fast_p = fast_p->next->next;
+
+        /* If slow_p and fast_p meet at some point then there is a loop */
+        if (slow_p == fast_p) {
+            removeLoop(slow_p, head);
+
+            /* Return 1 to indicate that loop was found & removed */
+            return 1;
+        }
+    }
+
+    /* Return 0 to indicate that no loop was found */
+    return 0;
 }
 
 void printList(struct Node* node) {
