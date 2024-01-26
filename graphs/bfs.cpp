@@ -29,11 +29,11 @@ void Graph::BFS(int V, vector<int> adj[]) {
   // Any node found as not visited implies
   // its part of a different component
   for (int i = 1; i <= V; i++) {
-    // if node i is not touched yet
+    // if node i is not visited yet, make it visited
     if (visited[i] == 0) {
+      visited[i] = 1;
       // bfs starts from first node inserted to queue
       q.push(i);
-      visited[i] = 1;
       while (!q.empty()) {
         int currNode = q.front();
         q.pop();
