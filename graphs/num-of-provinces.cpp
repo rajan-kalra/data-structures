@@ -38,20 +38,20 @@ public:
     queue<int> q;
     for (int i = 1; i <= V; i++) {
       if (visited[i] == 0) {
+        visited[i] = 1;
+        q.push(i);
         /**
          * At this point we are starting with a
          * new connected component.
          */
         count++;
-        q.push(i);
-        visited[i] = 1;
         while (q.empty() == false) {
           int node = q.front();
           q.pop();
-          for (auto it : adjList[node]) {
-            if (visited[it] == 0) {
-                q.push(it);
-                visited[it] = 1;
+          for (auto neighbor : adjList[node]) {
+            if (visited[neighbor] == 0) {
+                q.push(neighbor);
+                visited[neighbor] = 1;
             }
           }
         }
