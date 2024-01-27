@@ -47,9 +47,43 @@ void printNGE(int arr[], int n) {
     }
 }
 
+
+/**
+ * This code is not complete
+ */
+void printCircularNGE(vector<int> &input, int n) {
+    stack<int> s;
+
+    for (int i = 2 * n - 1; i >= 0; i--) {
+        //int curr = input[i % n];
+
+        /**
+         * keep popping the elements until stack is not empty
+         * & top of stack is less than or equal to the current
+         * element
+         */
+        // while (s.empty() == false && s.top() <= curr) {
+        while (s.empty() == false && s.top() <= input[i % n]) {
+            s.pop();
+        }
+
+        if (i < n) {
+            if (s.empty() == false) {
+                cout << input[i] << " -> " << s.top() << endl;
+            }
+        }
+        // insert the current element at the end always
+        s.push(input[i % n]);
+    }
+}
+
 int main() {
-    int arr[] = { 11, 13, 21, 3 };
-    int n = sizeof(arr) / sizeof(arr[0]);
-    printNGE(arr, n);
+    // int arr[] = { 11, 13, 21, 3 };
+    // int n1 = sizeof(arr) / sizeof(arr[0]);
+    // printNGE(arr, n1);
+
+    vector<int> arrCircular = { 5, 7, 1, 2, 6, 0 };
+    int size = arrCircular.size();
+    printCircularNGE(arrCircular, size);
     return 0;
 }
