@@ -11,6 +11,10 @@ public:
         int n = matrix.size();
 
         // Step 1: Transpose the matrix
+        /*
+         * You only need to iterate through the upper triangle 
+         * of the matrix to avoid swapping elements twice.
+         */
         for (int i = 0; i < n; ++i) {
             for (int j = i + 1; j < n; ++j) {
                 std::swap(matrix[i][j], matrix[j][i]);
