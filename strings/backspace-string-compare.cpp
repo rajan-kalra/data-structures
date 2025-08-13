@@ -28,13 +28,36 @@ public:
 
 // Example Usage (for testing locally)
 int main() {
-  Solution sol;
-  std::string s = "ab#c";
-  std::string t = "ad#c";
-  if (sol.backspaceCompare(s, t)) {
-      std::cout << "The strings are equal after backspace processing." << std::endl;
-  } else {
-      std::cout << "The strings are not equal after backspace processing." << std::endl;
-  }
-  return 0;
+    Solution sol;
+
+    // Test 1: Basic test, should be equal
+    std::string s1 = "ab#c";
+    std::string t1 = "ad#c";
+    std::cout << "Test 1: " << (sol.backspaceCompare(s1, t1) ? "PASS" : "FAIL") << std::endl; // Expected: PASS
+
+    // Test 2: Should be equal
+    std::string s2 = "ab##";
+    std::string t2 = "c#d#";
+    std::cout << "Test 2: " << (sol.backspaceCompare(s2, t2) ? "PASS" : "FAIL") << std::endl; // Expected: PASS
+
+    // Test 3: Should not be equal
+    std::string s3 = "a#c";
+    std::string t3 = "b";
+    std::cout << "Test 3: " << (sol.backspaceCompare(s3, t3) ? "PASS" : "FAIL") << std::endl; // Expected: FAIL
+
+    // Test 4: Both empty after backspaces
+    std::string s4 = "####";
+    std::string t4 = "##";
+    std::cout << "Test 4: " << (sol.backspaceCompare(s4, t4) ? "PASS" : "FAIL") << std::endl; // Expected: PASS
+
+    // Test 5: No backspaces, not equal
+    std::string s5 = "abc";
+    std::string t5 = "abd";
+    std::cout << "Test 5: " << (sol.backspaceCompare(s5, t5) ? "PASS" : "FAIL") << std::endl; // Expected: FAIL
+
+    // Test 6: No backspaces, equal
+    std::string s6 = "abc";
+    std::string t6 = "abc";
+    std::cout << "Test 6: " << (sol.backspaceCompare(s6, t6) ? "PASS" : "FAIL") << std::endl; // Expected: PASS
+    return 0;
 }
