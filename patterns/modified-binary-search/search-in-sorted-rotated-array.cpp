@@ -17,7 +17,10 @@ public:
 
             // Check if the left half is sorted
             if (nums[left] <= nums[mid]) {
-                // Check if target is in the left half
+                /*
+                 * Note the condition here doesn't include nums[mid] as nums[mid]
+                 * is already considered in the first check
+                 */
                 if (nums[left] <= target && target < nums[mid]) {
                     right = mid - 1;
                 } else {
@@ -26,7 +29,10 @@ public:
             }
             // The right half must be sorted
             else {
-                // Check if target is in the right half
+                /*
+                 * Note the condition here doesn't include nums[mid] as nums[mid]
+                 * is already considered in the first check
+                 */
                 if (nums[mid] < target && target <= nums[right]) {
                     left = mid + 1;
                 } else {
