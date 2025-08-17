@@ -9,6 +9,12 @@ public:
         int p2 = n - 1;
         int p_merge = m + n - 1;
 
+        /*
+         * We need to copy elements until p2 is >= 0 as we
+         * need to exhaust all elements from nums2 
+         * and merge them into nums1. Even if p1 becomes < 0
+         * we still need to copy elements from p2
+         */
         while (p2 >= 0) {
             if (p1 >= 0 && nums1[p1] > nums2[p2]) {
                 nums1[p_merge] = nums1[p1];
