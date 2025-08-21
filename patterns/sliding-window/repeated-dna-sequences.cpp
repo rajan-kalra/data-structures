@@ -13,12 +13,15 @@ std::vector<std::string> findRepeatedDnaSequences(std::string s) {
 
   for (int i = 0; i <= s.length() - 10; ++i) {
       std::string current_sequence = s.substr(i, 10);
-      if (seen.count(current_sequence)) { // If already seen, it's a repeated sequence
+      // If already seen, it's a repeated sequence
+      if (seen.find(current_sequence) != seen.end()) {
           repeated.insert(current_sequence);
       }
-      seen.insert(current_sequence); // Mark as seen
+      // add to seen 
+      seen.insert(current_sequence);
   }
 
+  // Convert the set to a vector
   std::vector<std::string> result(repeated.begin(), repeated.end());
   return result;
 }
