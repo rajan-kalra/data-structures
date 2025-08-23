@@ -23,6 +23,8 @@ public:
 };
 
 // Solution 2: Optimized solution using sorting and two pointers for binary search
+// Total time complexity: O(m log m) + O(n log m) = O((n + m) log m)
+
 class Solution2 {
 public:
     int findTheDistanceValue(std::vector<int>& arr1, std::vector<int>& arr2, int d) {
