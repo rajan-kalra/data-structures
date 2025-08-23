@@ -12,11 +12,15 @@ double findMaxAverage(std::vector<int>& nums, int k) {
     
     double maxSum = currentSum;
 
-    // Step 2: Slide the window
-    for (int i = k; i < nums.size(); ++i) {
-        // Add the new element and subtract the old one
-        currentSum = currentSum + nums[i] - nums[i - k];
-        
+    int startIndex = 0;
+    int endIndex = k;
+    while (endIndex < nums.size()) {
+        // Slide the window: remove the element going out
+        currentSum -= nums[startIndex];
+        startIndex++;
+        // Slide the window: add the new element
+        currentSum += nums[endIndex];
+        endIndex++;
         // Update the maximum sum
         maxSum = std::max(maxSum, currentSum);
     }
