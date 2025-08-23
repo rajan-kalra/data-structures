@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <numeric> // For std::accumulate
 #include <algorithm> // For std::max
 
 double findMaxAverage(std::vector<int>& nums, int k) {
