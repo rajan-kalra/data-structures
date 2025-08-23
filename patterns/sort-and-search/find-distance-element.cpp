@@ -1,22 +1,20 @@
 #include <iostream>
 #include <queue>
 #include <vector>
+#include <algorithm>
 
-class Solution {
+// Solution 1: Brute force solution
+class Solution1 {
 public:
     int findTheDistanceValue(std::vector<int>& arr1, std::vector<int>& arr2, int d) {
         int distanceValue = 0;
         
         for (int num1 : arr1) {
-            bool foundCloserElement = false;
             for (int num2 : arr2) {
                 if (std::abs(num1 - num2) <= d) {
-                    foundCloserElement = true;
+                    distanceValue++;
                     break; 
                 }
-            }
-            if (!foundCloserElement) {
-                distanceValue++;
             }
         }
         
@@ -24,14 +22,57 @@ public:
     }
 };
 
+// Solution 2: Optimized solution using sorting and two pointers for binary search
+class Solution2 {
+public:
+    int findTheDistanceValue(std::vector<int>& arr1, std::vector<int>& arr2, int d) {
+        // Sort arr2 to enable binary search
+        std::sort(arr2.begin(), arr2.end());
+
+        int distanceValue = 0;
+
+        // Iterate through each element in arr1.
+        for (int x : arr1) {
+            bool foundMatch = false;
+
+            // Use two pointers on the sorted arr2.
+            int low = 0;
+            int high = arr2.size() - 1;
+
+            while (low <= high) {
+                int mid = low + (high - low) / 2;
+
+                if (std::abs(x - arr2[mid]) <= d) {
+                    // Found a match, so this element of arr1 doesn't contribute.
+                    foundMatch = true;
+                    break;
+                } else if (arr2[mid] < x) {
+                    // The middle element is smaller than x, so search in the right half.
+                    low = mid + 1;
+                } else {
+                    // The middle element is greater than x, so search in the left half.
+                    high = mid - 1;
+                }
+            }
+
+            // If no match was found after binary search, increment the distance value.
+            if (!foundMatch) {
+                distanceValue++;
+            }
+        }
+
+        return distanceValue;
+    }
+};
+
 int main() {
-    Solution sol;
+    Solution2 sol;
     // Test 1
     std::vector<int> arr1 = {1, 4, 2};
     std::vector<int> arr2 = {3, 6, 3};
     int d = 2;
     int result = sol.findTheDistanceValue(arr1, arr2, d);
-    std::cout << "Test 1: The distance value is: " << result << " (expected: 1)" << std::endl;
+    std::cout << "Test 1: The distance value is: " << result << " (expected: 0)" << std::endl;
 
     // Test 2
     arr1 = {4, 5, 8};
