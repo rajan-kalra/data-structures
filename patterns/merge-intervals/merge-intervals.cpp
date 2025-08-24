@@ -12,8 +12,9 @@ public:
         // 1. Sort the intervals based on the start time.
         std::sort(intervals.begin(), intervals.end());
 
+        // 2. Initialize with the first interval.
         std::vector<std::vector<int>> merged_intervals;
-        merged_intervals.push_back(intervals[0]); // 2. Initialize with the first interval.
+        merged_intervals.push_back(intervals[0]);
 
         // 3. Iterate through the remaining intervals to merge.
         for (int i = 1; i < intervals.size(); ++i) {
@@ -29,6 +30,7 @@ public:
                 merged_intervals.push_back(current);
             }
         }
+        
         return merged_intervals;
     }
 };
