@@ -4,22 +4,32 @@
 #include <algorithm>
 
 int minSubArrayLen(int s, std::vector<int>& nums) {
-    int n = nums.size();
-    if (n == 0) {
+    int size = nums.size();
+    if (size == 0) {
         return 0;
     }
-    
-    int left = 0;
+
+    // Edge case: when target sum is 0 & since the array is not empty, we can return 1
+    if (s == 0) {
+        return 1;
+    }
+
     int currentSum = 0;
     int minLength = INT_MAX;
-    
-    for (int right = 0; right < n; ++right) {
-        currentSum += nums[right];
-        
+
+    int startIndex = 0;
+    int endIndex = 0;
+    while (endIndex < size) {
+        currentSum += nums[endIndex];
+        endIndex++;
+
+        // Shrink the window as small as possible while the sum is larger than s
         while (currentSum >= s) {
-            minLength = std::min(minLength, right - left + 1);
-            currentSum -= nums[left];
-            left++;
+            minLength = std::min(minLength, endIndex - startIndex);
+
+            // Shrink the window from the left
+            currentSum -= nums[startIndex];
+            startIndex++;
         }
     }
     
