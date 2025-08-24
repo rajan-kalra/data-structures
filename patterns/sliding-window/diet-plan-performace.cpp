@@ -4,9 +4,13 @@
 class Solution {
 public:
     int dietPlanPerformance(std::vector<int>& calories, int k, int lower, int upper) {
+        // Edge case: if the array is smaller than k or k is 0
+        if (calories.size() < k || k == 0) {
+            return 0;
+        }
+
         int points = 0;
         int current_calories = 0;
-
         // Calculate the sum for the first window
         for (int i = 0; i < k; ++i) {
             current_calories += calories[i];
@@ -19,10 +23,13 @@ public:
             points++;
         }
 
-        // Slide the window for the rest of the array
-        for (int i = k; i < calories.size(); ++i) {
-            // Update the window sum by adding the new element and subtracting the old one
-            current_calories += calories[i] - calories[i - k];
+        int startIndex = 0;
+        int endIndex = k;
+        while (endIndex < calories.size()) {
+            current_calories -= calories[startIndex];
+            startIndex++;
+            current_calories += calories[endIndex];
+            endIndex++;
 
             // Evaluate the current window
             if (current_calories < lower) {
@@ -45,8 +52,8 @@ int main() {
     int lower1 = 5000;
     int upper1 = 8000;
     int result1 = sol.dietPlanPerformance(calories1, k1, lower1, upper1);
-    std::cout << "Test 1: " << result1 << " (expected: 1)" << std::endl;
-    // Windows: [2000,2500,3000]=7500 (+1), [2500,3000,1500]=7000 (0), [3000,1500,1000]=5500 (0)
+    std::cout << "Test 1: " << result1 << " (expected: 0)" << std::endl;
+    // Windows: [2000,2500,3000]=7500 (0), [2500,3000,1500]=7000 (0), [3000,1500,1000]=5500 (0)
 
     // Test 2: All windows below lower
     std::vector<int> calories2 = {1000, 1000, 1000, 1000};
@@ -81,8 +88,8 @@ int main() {
     int lower5 = 5000;
     int upper5 = 7000;
     int result5 = sol.dietPlanPerformance(calories5, k5, lower5, upper5);
-    std::cout << "Test 5: " << result5 << " (expected: 1)" << std::endl;
-    // Window: [1000,2000,3000]=6000 (+1)
+    std::cout << "Test 5: " << result5 << " (expected: 0)" << std::endl;
+    // Window: [1000,2000,3000]=6000 (0)
 
     // Test 6: Mixed results
     std::vector<int> calories6 = {6000, 1000, 1500, 3000, 700};
@@ -90,7 +97,7 @@ int main() {
     int lower6 = 2000;
     int upper6 = 4000;
     int result6 = sol.dietPlanPerformance(calories6, k6, lower6, upper6);
-    std::cout << "Test 6: " << result6 << " (expected: 1)" << std::endl;
+    std::cout << "Test 6: " << result6 << " (expected: 2)" << std::endl;
     // Windows: [6000,1000]=7000 (+1), [1000,1500]=2500 (0), [1500,3000]=4500 (+1), [3000,700]=3700 (0)
 
     // Test 7: Edge case - very high calories
