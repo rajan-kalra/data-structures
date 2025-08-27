@@ -18,10 +18,13 @@ public:
         char char_t = t[i];
 
         // Check the forward mapping from s to t
+        // If the character from s is already mapped to a different character in t
         if (map_s_to_t.find(char_s) != map_s_to_t.end() && map_s_to_t[char_s] != char_t) {
             return false; // Inconsistent mapping
         }
 
+        // Check the reverse mapping from t to s
+        // If the character from t is already mapped to a different character in s
         if (map_t_to_s.find(char_t) != map_t_to_s.end() && map_t_to_s[char_t] != char_s) {
             return false; // Inconsistent mapping
         }
