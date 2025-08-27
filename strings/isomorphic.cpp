@@ -18,18 +18,16 @@ public:
         char char_t = t[i];
 
         // Check the forward mapping from s to t
-        if (map_s_to_t.count(char_s)) {
-            if (map_s_to_t[char_s] != char_t) {
-                return false;
-            }
-        } else {
-            // If no forward mapping exists, check if reverse mapping already exists
-            if (map_t_to_s.count(char_t)) {
-                return false; // This means char_t is already mapped from a different char_s
-            }
-            map_s_to_t[char_s] = char_t;
-            map_t_to_s[char_t] = char_s;
+        if (map_s_to_t.find(char_s) != map_s_to_t.end() && map_s_to_t[char_s] != char_t) {
+            return false; // Inconsistent mapping
         }
+
+        if (map_t_to_s.find(char_t) != map_t_to_s.end() && map_t_to_s[char_t] != char_s) {
+            return false; // Inconsistent mapping
+        }
+
+        map_s_to_t[char_s] = char_t;
+        map_t_to_s[char_t] = char_s;
     }
 
     return true;
@@ -38,13 +36,40 @@ public:
 
 // Example Usage (for testing locally)
 int main() {
-  Solution sol;
-  std::string s = "ab#c";
-  std::string t = "ad#c";
-  if (sol.isIsomorphic(s, t)) {
-      std::cout << "The strings are isomorphic." << std::endl;
-  } else {
-      std::cout << "The strings are not isomorphic." << std::endl;
-  }
+    Solution sol;
+    // Test 1: Isomorphic strings
+    std::string s1 = "egg";
+    std::string t1 = "add";
+    std::cout << "Test 1: " << (sol.isIsomorphic(s1, t1) ? "PASS" : "FAIL") << " (expected: PASS)" << std::endl;
+
+    // Test 2: Not isomorphic
+    std::string s2 = "foo";
+    std::string t2 = "bar";
+    std::cout << "Test 2: " << (sol.isIsomorphic(s2, t2) ? "PASS" : "FAIL") << " (expected: FAIL)" << std::endl;
+
+    // Test 3: Isomorphic with different characters
+    std::string s3 = "paper";
+    std::string t3 = "title";
+    std::cout << "Test 3: " << (sol.isIsomorphic(s3, t3) ? "PASS" : "FAIL") << " (expected: PASS)" << std::endl;
+
+    // Test 4: Different lengths
+    std::string s4 = "ab";
+    std::string t4 = "a";
+    std::cout << "Test 4: " << (sol.isIsomorphic(s4, t4) ? "PASS" : "FAIL") << " (expected: FAIL)" << std::endl;
+
+    // Test 5: Both empty strings
+    std::string s5 = "";
+    std::string t5 = "";
+    std::cout << "Test 5: " << (sol.isIsomorphic(s5, t5) ? "PASS" : "FAIL") << " (expected: PASS)" << std::endl;
+
+    // Test 6: Single character
+    std::string s6 = "a";
+    std::string t6 = "b";
+    std::cout << "Test 6: " << (sol.isIsomorphic(s6, t6) ? "PASS" : "FAIL") << " (expected: PASS)" << std::endl;
+
+    // Test 7: Repeated characters, not isomorphic
+    std::string s7 = "ab";
+    std::string t7 = "aa";
+    std::cout << "Test 7: " << (sol.isIsomorphic(s7, t7) ? "PASS" : "FAIL") << " (expected: FAIL)" << std::endl;
   return 0;
 }
