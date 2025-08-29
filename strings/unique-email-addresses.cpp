@@ -22,8 +22,14 @@ public:
           domain_name = email.substr(email.find('@') + 1);
 
           // Normalize the local name by removing dots and everything after a plus sign
-          local_name.erase(std::remove(local_name.begin(), local_name.end(), '.'), local_name.end());
-          local_name = local_name.substr(0, local_name.find('+'));
+          std::string normalized_local;
+          for (char c : local_name) {
+              if (c == '+')
+                break;
+              if (c != '.')
+                normalized_local += c;
+          }
+          local_name = normalized_local;
 
           // Combine the normalized local name with the domain name
           std::string normalized_email = local_name + "@" + domain_name;
