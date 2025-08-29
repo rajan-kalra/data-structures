@@ -34,7 +34,7 @@ int main() {
     std::cout << "Initial Kth Largest element: " << kthLargest.add(0) << std::endl; // Adds 0, heap is {4, 5, 8}, top is 4
     std::cout << "Kth Largest element after adding 0: " << kthLargest.add(0) << std::endl;
     std::cout << "Kth Largest element after adding 5: " << kthLargest.add(5) << std::endl; // Adds 5, heap is {5, 5, 8}, top is 5
-    std::cout << "Kth Largest element after adding 10: " << kthLargest.add(10) << std::endl; // Adds 10, heap is {5, 8, 10}, top is 8
+    std::cout << "Kth Largest element after adding 10: " << kthLargest.add(10) << std::endl; // Adds 10, heap is {5, 8, 10}, top is 5
     std::cout << "Kth Largest element after adding 9: " << kthLargest.add(9) << std::endl;  // Adds 9, heap is {8, 9, 10}, top is 8
     std::cout << "Kth Largest element after adding 4: " << kthLargest.add(4) << std::endl;  // Adds 4, heap is {8, 9, 10}, top is 8
 
