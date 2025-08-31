@@ -1,52 +1,53 @@
 #include <iostream>
-using namespace std;
 
-struct Node {
-    Node* links[26] = { NULL };
-    // every node holds this count for no of words ends here
-    int countEndsWith = 0;
-    // every node holds this count for no of words this node is part of its prefix
-    int countPrefix = 0;
+class Node {
+    private:
+        Node* links[26] = { nullptr };
+        // every node holds this count for no of words ends here
+        int countEndsWith = 0;
+        // every node holds this count for no of words this node is part of its prefix
+        int countPrefix = 0;
 
-    // checks if the trie node corresponding to given character exists
-    bool isCharacterNodePresent(char ch) {
-        return (links[ch - 'a'] != NULL);   
-    }
+    public:
+        // checks if the trie node corresponding to given character exists
+        bool has(char ch) {
+            return (links[ch - 'a'] != nullptr);   
+        }
 
-    // to add new trie node corresponding to given character
-    void addCharacterNode(char ch) {
-        Node *node = new Node();
-        links[ch - 'a'] = node;
-    }
+        // to add new trie node corresponding to given character
+        void add(char ch) {
+            Node *node = new Node();
+            links[ch - 'a'] = node;
+        }
 
-    // to get the trie node corresponding to given character
-    Node* getNextNode(char ch) {
-        return links[ch - 'a'];
-    }
+        // to get the trie node corresponding to given character
+        Node* get(char ch) {
+            return links[ch - 'a'];
+        }
 
-    void incrementWordCount() {
-        countEndsWith++;
-    }
+        void incrementWordCount() {
+            countEndsWith++;
+        }
 
-    void incrementPrefixCount() {
-        countPrefix++;
-    }
+        void incrementPrefixCount() {
+            countPrefix++;
+        }
 
-    void decrementWordCount() {
-        countEndsWith--;
-    }
+        void decrementWordCount() {
+            countEndsWith--;
+        }
 
-    void decrementPrefixCount() {
-        countPrefix--;
-    }
+        void decrementPrefixCount() {
+            countPrefix--;
+        }
 
-    int getWordCount() {
-        return countEndsWith;
-    }
+        int getWordCount() {
+            return countEndsWith;
+        }
 
-    int getPrefixCount() {
-        return countPrefix;
-    }
+        int getPrefixCount() {
+            return countPrefix;
+        }
 };
  
 class Trie {
@@ -60,14 +61,16 @@ class Trie {
         }
     
         /* Inserts a word into the trie */
-        void insert(string word) {
+        void insert(const std::string& word) {
+            // always start with the root node to start inserting the characters
             Node *currNode = root;
-            for (int i = 0; i < word.length(); i++) {
-                if (currNode->isCharacterNodePresent(word[i]) == false) {
-                    currNode->addCharacterNode(word[i]);
+
+            for (char ch : word) {
+                if (currNode->has(ch) == false) {
+                    currNode->add(ch);
                 }
 
-                currNode = currNode->getNextNode(word[i]);
+                currNode = currNode->get(ch);
 
                 // for every insert we increment the prefix count
                 currNode->incrementPrefixCount();
@@ -76,12 +79,12 @@ class Trie {
             // at the end of inserting word, we increment the word count of last node
             currNode->incrementWordCount();
         }
- 
-        int countWordsEqualTo(string &word) {
+
+        int countWordsEqualTo(const std::string &word) {
             Node *currNode = root;
-            for (int i = 0; i < word.length(); i++) {
-                if (currNode->isCharacterNodePresent(word[i])) {
-                    currNode = currNode->getNextNode(word[i]);
+            for (char ch : word) {
+                if (currNode->has(ch)) {
+                    currNode = currNode->get(ch);
                 } else {
                     return 0;
                 }
@@ -91,11 +94,11 @@ class Trie {
             return currNode->getWordCount();
         }
 
-        int countWordsStartingWith(string &word) {
+        int countWordsStartingWith(const std::string &word) {
             Node *currNode = root;
-            for (int i = 0; i < word.length(); i++) {
-                if (currNode->isCharacterNodePresent(word[i])) {
-                    currNode = currNode -> getNextNode(word[i]);
+            for (char ch : word) {
+                if (currNode->has(ch)) {
+                    currNode = currNode->get(ch);
                 } else {
                     return 0;
                 }
@@ -103,12 +106,12 @@ class Trie {
 
             return currNode->getPrefixCount();
         }
- 
-        void erase(string &word) {
+
+        void erase(const std::string &word) {
             Node *currNode = root;
-            for (int i = 0; i < word.length(); i++) {
-                if (currNode->isCharacterNodePresent(word[i])) {
-                    currNode = currNode->getNextNode(word[i]);
+            for (char ch : word) {
+                if (currNode->has(ch)) {
+                    currNode = currNode->get(ch);
                     currNode->decrementPrefixCount();
                 } else {
                     return;
@@ -127,19 +130,20 @@ int main() {
     T.insert("apps");
     T.insert("apps");
 
-    string word1 = "apps";
-    cout << "Count of words equal to " << word1 << ": " << T.countWordsEqualTo(word1) << endl;
+    std::string word1 = "apps";
+    std::cout << "Count of words equal to " << word1 << ": " << T.countWordsEqualTo(word1) << std::endl;
 
-    string word2 = "abc";
-    cout << "Count of words equal to " << word2 << ": " << T.countWordsEqualTo(word2) << endl;
+    std::string word2 = "abc";
+    std::cout << "Count of words equal to " << word2 << ": " << T.countWordsEqualTo(word2) << std::endl;
 
-    string word3 = "ap";
-    cout << "Count of words starting with " << word3 << ": " << T.countWordsStartingWith(word3) << endl;
+    std::string word3 = "ap";
+    std::cout << "Count of words starting with " << word3 << ": " << T.countWordsStartingWith(word3) << std::endl;
 
-    string word4 = "appl";
-    cout << "Count of words starting with " << word4 << ": " << T.countWordsStartingWith(word4) << endl;
+    std::string word4 = "appl";
+    std::cout << "Count of words starting with " << word4 << ": " << T.countWordsStartingWith(word4) << std::endl;
 
+    std::cout << "Remove: " << word1 << std::endl;
     T.erase(word1);
-    cout << "Count of words equal to " << word1 << ": " << T.countWordsEqualTo(word1) << endl;
+    std::cout << "Count of words equal to " << word1 << ": " << T.countWordsEqualTo(word1) << std::endl;
     return 0;
 }
