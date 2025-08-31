@@ -1,38 +1,35 @@
 #include<iostream>
 #include<vector>
-
-using namespace std;
  
-struct Node {
-    // links to subsequent trie nodes
-    Node* links[26] = { NULL };
-
-    // flag to infer if current node is last node for any of the word
+class Node {
+    Node* links[26] = { nullptr };
     bool flag = false;
 
+public:
+
     // checks if the trie node corresponding to given character exists
-    bool isCharacterNodePresent(char ch) {
-        return (links[ch - 'a'] != NULL);
+    bool has(char ch) {
+        return (links[ch - 'a'] != nullptr);
     }
 
     // to add new trie node corresponding to given character
-    void addCharacterNode(char ch) {
+    void add(char ch) {
         Node *node = new Node();
         links[ch - 'a'] = node;
     }
 
     // to get the trie node corresponding to given character
-    Node* getNextNode(char ch) {
+    Node* get(char ch) {
         return links[ch - 'a'];
     }
 
     // to set flag to true to mark end of the word
-    void setAsEndNode() {
+    void setEnd() {
         flag = true;
     }
 
     // to check if a word ends at the current node or not
-    bool isEndNode() {
+    bool isEnd() {
         return flag;
     }
 };
@@ -47,45 +44,47 @@ class Trie {
             root = new Node();
         }
 
-        void insert (string word) {
+        void insert (const std::string& word) {
             // always start with the root node to start inserting the characters
             Node *currNode = root;
-            for (int i = 0; i < word.size(); i++) {
-                // current key/char doesn't have the corresponding reference trie node
-                if (currNode->isCharacterNodePresent(word[i]) == false) {
-                    currNode->addCharacterNode(word[i]);
+
+            for (char ch : word) {
+                // current char doesn't have the corresponding reference trie node
+                if (currNode->has(ch) == false) {
+                    currNode->add(ch);
                 }
 
                 // move to next char reference trie node
-                currNode = currNode->getNextNode(word[i]);
+                currNode = currNode->get(ch);
             }
 
             // once the word ends, mark the current reference trie node as last
-            currNode->setAsEndNode();
+            currNode->setEnd();
         }
 
-        bool search(string word) {
+        bool search(const std::string& word) {
             // always start with the root node to start checking if the characters of the given word exists
             Node *currNode = root;
-            for (int i = 0; i < word.size(); i++) {
-                if (currNode->isCharacterNodePresent(word[i]) == false) {
+
+            for (char ch : word) {
+                if (currNode->has(ch) == false) {
                     return false;
                 }
 
                 // move to next char reference trie node
-                currNode = currNode->getNextNode(word[i]);
+                currNode = currNode->get(ch);
             }
 
-            return currNode->isEndNode();
+            return currNode->isEnd();
         }
 
-        bool startsWith(string prefix) {
+        bool startsWith(const std::string& prefix) {
             Node* currNode = root;
-            for (int i = 0; i < prefix.size(); i++) {
-                if (!currNode->isCharacterNodePresent(prefix[i])) {
+            for (char ch : prefix) {
+                if (!currNode->has(ch)) {
                     return false;
                 }
-                currNode = currNode->getNextNode(prefix[i]);
+                currNode = currNode->get(ch);
             }
 
             return true;
@@ -97,8 +96,8 @@ int main() {
     // 1. Insert Operation
     // 2. Search Operation
     // 3. Starts With Operation
-    vector<int> operationType = { 1, 1, 2, 3, 2 };
-    vector<string> operationValue = { "hello", "help", "help", "hel", "hel" };
+    std::vector<int> operationType = { 1, 1, 2, 3, 2 };
+    std::vector<std::string> operationValue = { "hello", "help", "help", "hel", "hel" };
 
     // initialize trie
     Trie trie;
@@ -106,23 +105,23 @@ int main() {
     for (int i = 0; i < n; i++) {
         // Insert operation
         if (operationType[i] == 1) {
-            cout << "Insert word: " << operationValue[i] << endl;
+            std::cout << "Insert word: " << operationValue[i] << std::endl;
             trie.insert(operationValue[i]);
         // Search operation
         } else if (operationType[i] == 2) {
-            cout << "Search word: " << operationValue[i] << " -> ";
+            std::cout << "Search word: " << operationValue[i] << " -> ";
             if (trie.search(operationValue[i])) {
-                cout << "found" << "\n";
+                std::cout << "found" << "\n";
             } else {
-                cout << "false" << "\n";
+                std::cout << "false" << "\n";
             }
         // StartsWith Operation
         } else {
             if (trie.startsWith(operationValue[i])) {
-                cout << "Check if a word starts with: " << operationValue[i] << " -> ";
-                cout << "found" << "\n";
+                std::cout << "Check if a word starts with: " << operationValue[i] << " -> ";
+                std::cout << "found" << "\n";
             } else {
-                cout << "not found" << "\n";
+                std::cout << "not found" << "\n";
             }
         }
     }
