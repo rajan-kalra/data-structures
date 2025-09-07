@@ -6,7 +6,6 @@ class Solution {
 public:
     int minLength(std::string s) {
         std::stack<char> st;
-
         for (char c : s) {
             if (!st.empty()) {
                 char last_char = st.top();
@@ -22,6 +21,12 @@ public:
         return st.size();
     }
 
+    /*
+     * std::string is often slightly faster than std::stack<char> because:
+     * 1. std::string stores data contiguously in memory, which can be more cache-friendly.
+     * 2. std::stack<char> is typically implemented as a wrapper over std::deque<char>, which may have slightly more overhead.
+     * 3. std::string is more idiomatic for problems where you need to build or modify a string.
+     */
     int minLengthOptimized(std::string s) {
         std::string result;
         for (char c : s) {
