@@ -11,12 +11,17 @@ public:
         int current_num = 0;
 
         for (char c : s) {
+            // if its a digit, create the complete number
             if (isdigit(c)) {
                 current_num = current_num * 10 + (c - '0');
+            // if its a character, add it to the current string
             } else if (isalpha(c)) {
                 current_string += c;
+            // opening bracket
             } else if (c == '[') {
+                // when the '[' is encountered, push the current number onto the stack
                 num_stack.push(current_num);
+                // when the '[' is encountered, push the current string and reset
                 str_stack.push(current_string);
                 current_num = 0;
                 current_string = "";
