@@ -29,6 +29,13 @@ public:
             }
             right--;
 
+            /*
+             * Without this check, in cases where the spiral has already
+             * moved past the last row (e.g., in single-row or single-column
+             * matrices, or after several layers), you could end up traversing
+             * the same row twice or accessing invalid indices, leading to
+             * incorrect results or out-of-bounds errors.
+             */
             // Traverse left
             if (top <= bottom) {
                 for (int i = right; i >= left; --i) {
