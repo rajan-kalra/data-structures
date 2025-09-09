@@ -19,6 +19,8 @@ public:
         }
 
         // Extract k-1 times and push the next element from the same row
+        // On each iteration we extract the smallest element from the heap
+        // and then push the next element from the same row into the heap
         for (int i = 0; i < k - 1; ++i) {
             auto [val, rc] = pq.top();
             pq.pop();
