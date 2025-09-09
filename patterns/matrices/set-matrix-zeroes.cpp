@@ -36,21 +36,67 @@ void setZeroes(std::vector<std::vector<int>>& matrix) {
 }
 
 int main() {
-    std::vector<std::vector<int>> matrix = {
+    // Test 1: 3x3 matrix with a zero in the middle
+    std::vector<std::vector<int>> matrix1 = {
         {1, 1, 1},
         {1, 0, 1},
         {1, 1, 1}
     };
-
-    setZeroes(matrix);
-
-    // Print the modified matrix
-    for (const auto& row : matrix) {
-        for (int val : row) {
-            std::cout << val << " ";
-        }
+    setZeroes(matrix1);
+    std::cout << "Test 1: Output:" << std::endl;
+    for (const auto& row : matrix1) {
+        for (int val : row) std::cout << val << " ";
         std::cout << std::endl;
     }
+    std::cout << "Expected:\n1 0 1\n0 0 0\n1 0 1\n" << std::endl;
+
+    // Test 2: 2x2 matrix, all zeros
+    std::vector<std::vector<int>> matrix2 = {
+        {0, 0},
+        {0, 0}
+    };
+    setZeroes(matrix2);
+    std::cout << "Test 2: Output:" << std::endl;
+    for (const auto& row : matrix2) {
+        for (int val : row) std::cout << val << " ";
+        std::cout << std::endl;
+    }
+    std::cout << "Expected:\n0 0\n0 0\n" << std::endl;
+
+    // Test 3: 2x3 matrix, zero in first row
+    std::vector<std::vector<int>> matrix3 = {
+        {0, 2, 3},
+        {4, 5, 6}
+    };
+    setZeroes(matrix3);
+    std::cout << "Test 3: Output:" << std::endl;
+    for (const auto& row : matrix3) {
+        for (int val : row) std::cout << val << " ";
+        std::cout << std::endl;
+    }
+    std::cout << "Expected:\n0 0 0\n0 5 6\n" << std::endl;
+
+    // Test 4: 1x4 matrix, no zeros
+    std::vector<std::vector<int>> matrix4 = {
+        {1, 2, 3, 4}
+    };
+    setZeroes(matrix4);
+    std::cout << "Test 4: Output:" << std::endl;
+    for (const auto& row : matrix4) {
+        for (int val : row) std::cout << val << " ";
+        std::cout << std::endl;
+    }
+    std::cout << "Expected:\n1 2 3 4\n" << std::endl;
+
+    // Test 5: Empty matrix
+    std::vector<std::vector<int>> matrix5 = {};
+    setZeroes(matrix5);
+    std::cout << "Test 5: Output:" << std::endl;
+    for (const auto& row : matrix5) {
+        for (int val : row) std::cout << val << " ";
+        std::cout << std::endl;
+    }
+    std::cout << "Expected:\n" << std::endl;
 
     return 0;
 }
