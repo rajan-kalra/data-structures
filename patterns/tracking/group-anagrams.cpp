@@ -16,6 +16,7 @@ std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& st
     
     std::vector<std::vector<std::string>> result;
     for (const auto& pair : anagramGroups) {
+        // we push the entire vector of anagrams
         result.push_back(pair.second);
     }
     
