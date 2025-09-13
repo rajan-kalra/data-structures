@@ -10,10 +10,12 @@ public:
 
         while (left < right) {
             // Move left pointer past non-alphanumeric characters
+            // & stop at the first alphanumeric character
             while (left < right && !isalnum(s[left])) {
                 left++;
             }
             // Move right pointer past non-alphanumeric characters
+            // & stop at the first alphanumeric character
             while (left < right && !isalnum(s[right])) {
                 right--;
             }
