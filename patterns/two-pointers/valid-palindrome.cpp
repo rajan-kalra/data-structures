@@ -21,6 +21,7 @@ public:
             }
 
             // Compare characters after converting to lowercase
+            // the first non-matching pair means it's not a palindrome
             if (tolower(s[left]) != tolower(s[right])) {
                 return false;
             }
