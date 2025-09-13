@@ -36,12 +36,25 @@ public:
 };
 
 int main() {
-  Solution solution;
-  std::string s = "A man, a plan, a canal: Panama";
-  if (solution.isPalindrome(s)) {
-      std::cout << "\"" << s << "\" is a palindrome." << std::endl;
-  } else {
-      std::cout << "\"" << s << "\" is not a palindrome." << std::endl;
-  }
-  return 0;
+    Solution solution;
+    std::vector<std::pair<std::string, bool>> test_cases = {
+        {"A man, a plan, a canal: Panama", true},
+        {"race a car", false},
+        {"", true},
+        {" ", true},
+        {"a.", true},
+        {"0P", false},
+        {"Madam", true},
+        {"No lemon, no melon", true},
+        {"Was it a car or a cat I saw?", true},
+        {"hello", false}
+    };
+
+    for (const auto& [input, expected] : test_cases) {
+        bool result = solution.isPalindrome(input);
+        std::cout << "Input: \"" << input << "\" -> Output: " 
+                  << (result ? "true" : "false")
+                  << " (expected: " << (expected ? "true" : "false") << ")\n";
+    }
+    return 0;
 }
