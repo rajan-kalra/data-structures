@@ -4,10 +4,11 @@
 
 class Solution {
 public:
+    // Left to right approach using a stack to keep track of indices of temperatures
     std::vector<int> dailyTemperatures(std::vector<int>& temperatures) {
         int n = temperatures.size();
         std::vector<int> result(n, 0);
-        std::stack<int> s;
+        std::stack<int> s; // stores indices
 
         for (int i = 0; i < n; ++i) {
             while (!s.empty() && temperatures[i] > temperatures[s.top()]) {
@@ -20,6 +21,24 @@ public:
 
         return result;
     }
+
+    // Right to left approach using a stack to keep track of indices of temperatures
+    std::vector<int> dailyTemperatures(std::vector<int>& temperatures) {
+    int n = temperatures.size();
+    std::vector<int> result(n, 0);
+    std::stack<int> s; // stores indices
+
+    for (int i = n - 1; i >= 0; --i) {
+        while (!s.empty() && temperatures[i] >= temperatures[s.top()]) {
+            s.pop();
+        }
+        if (!s.empty()) {
+            result[i] = s.top() - i;
+        }
+        s.push(i);
+    }
+    return result;
+}
 };
 
 int main() {

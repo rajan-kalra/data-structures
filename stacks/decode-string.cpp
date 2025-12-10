@@ -1,44 +1,58 @@
 #include <iostream>
 #include <string>
 #include <stack>
+#include <cctype>
 
 class Solution {
 public:
     std::string decodeString(std::string s) {
-        std::stack<int> num_stack;
-        std::stack<std::string> str_stack;
-        std::string current_string = "";
-        int current_num = 0;
-
-        for (char c : s) {
-            // if its a digit, create the complete number
-            if (isdigit(c)) {
-                current_num = current_num * 10 + (c - '0');
-            // if its a character, add it to the current string
-            } else if (isalpha(c)) {
-                current_string += c;
-            // opening bracket
-            } else if (c == '[') {
-                // when the '[' is encountered, push the current number onto the stack
-                num_stack.push(current_num);
-                // when the '[' is encountered, push the current string and reset
-                str_stack.push(current_string);
-                current_num = 0;
-                current_string = "";
-            } else if (c == ']') {
-                int repeat_times = num_stack.top();
-                num_stack.pop();
-                std::string prev_string = str_stack.top();
-                str_stack.pop();
-
-                std::string temp_string = "";
-                for (int i = 0; i < repeat_times; ++i) {
-                    temp_string += current_string;
+        std::stack<char> stack;
+        
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] != ']') {
+                stack.push(s[i]);
+            } else {
+                // Build substring until we find '['
+                std::string substr = "";
+                while (!stack.empty() && stack.top() != '[') {
+                    substr = stack.top() + substr;
+                    stack.pop();
                 }
-                current_string = prev_string + temp_string;
+                
+                // Pop the '['
+                if (!stack.empty()) {
+                    stack.pop();
+                }
+                
+                // Extract the number
+                std::string k = "";
+                while (!stack.empty() && std::isdigit(stack.top())) {
+                    k = stack.top() + k;
+                    stack.pop();
+                }
+                
+                // Convert k to integer and repeat substr
+                int count = std::stoi(k);
+                std::string repeated = "";
+                for (int j = 0; j < count; j++) {
+                    repeated += substr;
+                }
+                
+                // Push each character of repeated string back to stack
+                for (char c : repeated) {
+                    stack.push(c);
+                }
             }
         }
-        return current_string;
+        
+        // Build final result from stack
+        std::string result = "";
+        while (!stack.empty()) {
+            result = stack.top() + result;
+            stack.pop();
+        }
+        
+        return result;
     }
 };
 
@@ -83,6 +97,7 @@ int main() {
     // Test 8: Complex nested structure
     std::string expr8 = "3[a2[c4[d]]]";
     std::string result8 = sol.decodeString(expr8);
-    std::cout << "Test 8: " << result8 << " (expected: acddddcdddacdddddddacddddddd)" << std::endl;
+    std::cout << "Test 8: " << result8 << " (expected: acdddcdddacddddcdddacddddcddd)" << std::endl;
+    
     return 0;
 }
