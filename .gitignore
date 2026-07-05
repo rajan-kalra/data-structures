@@ -33,3 +33,10 @@ packages
 *.a
 *.so
 *.dylib
+
+# CodeSight
+.codesight/
+
+# Compiled output binaries
+a.out
+**/a.out
